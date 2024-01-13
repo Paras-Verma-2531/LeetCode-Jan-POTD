@@ -1,18 +1,22 @@
-# January-12 
+# January-13 
 
-## 1704. Determine if String Halves Are Alike
+## 1347. Minimum Number of Steps To Make Two Strings Anagram
 
 ```java
-class Solution {
-    public boolean halvesAreAlike(String s) {
-        int i=0,n=s.length();
-        Character[]ch={'a','e','i','o','u','A','E','I','O','U'};
-        List<Character>vowels=Arrays.asList(ch);
-        int count1=0,count2=0;
-        for(i=0;i<n/2;i++)
-        {
-            if(vowels.contains(s.charAt(i)))count1++;
-            if(vowels.contains(s.charAt(i+n/2)))count2++;
-        }return count1==count2;
+public class Solution {
+    public int minSteps(String s, String t) {
+        int[] countS = new int[26];
+        int[] countT = new int[26];
+        for (char ch : s.toCharArray()) {
+            countS[ch - 'a']++;
+        }
+        for (char ch : t.toCharArray()) {
+            countT[ch - 'a']++;
+        }
+        int steps = 0;
+        for (int i = 0; i < 26; i++) {
+            steps += Math.abs(countS[i] - countT[i]);
+        }
+        return steps / 2;  
     }
 }
