@@ -3,29 +3,26 @@
 ## 1239. Maximum Length of A Concatenated String with Unique Characters
 
 ```java
-public class Solution {
-    private void backTrack(List<String> arr, String current, 
-    int start, int[] maxLength) {
-        if (maxLength[0] < current.length())
-            maxLength[0] = current.length();
-        for (int i = start; i < arr.size(); i++) {
-            if (!isValid(current, arr.get(i)))continue;
-            backTrack(arr, current + arr.get(i), i + 1, maxLength);
+class Solution {
+    private void helper(List<String> arr,String str,int start,int[]maxLength)
+    {
+        if(maxLength[0]<str.length())maxLength[0]=str.length();
+        for(int i=start;i<arr.size();i++)
+        {
+            if(!isValid(str,arr.get(i)))continue;
+            helper(arr,str+arr.get(i),i+1,maxLength);
         }
     }
-
-    public int maxLength(List<String> arr) {
-        int[] maxLength = { 0 };
-        backTrack(arr, "", 0, maxLength);
-        return maxLength[0];
+    private boolean isValid(String st1,String st2)
+    {
+        Set<Character>set=new HashSet<>();
+        for(char ch:st1.toCharArray())set.add(ch);
+        for(char ch:st2.toCharArray())set.add(ch);
+        return set.size()==st1.length()+st2.length();
     }
-
-    private boolean isValid(String currentString, String newString) {
-        Set<Character> charSet = new HashSet<>();
-        for (char ch : newString.toCharArray()) {
-            if (charSet.contains(ch))return false;
-            charSet.add(ch);
-            if (currentString.contains(String.valueOf(ch)))return false;
-        }return true;
+    public int maxLength(List<String> arr) {
+        int[]maxLength={0};
+        helper(arr,"",0,maxLength);
+        return maxLength[0];
     }
 }
